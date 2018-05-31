@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pub.iseekframework</groupId>
+    <artifactId>iseekframework-sdk</artifactId>
+    <version>${project.release.version}</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.release.version>0.1-SNAPSHOT</project.release.version>
+        <apache.logging>1.2</apache.logging>
+        <jdk.version>1.8</jdk.version>
+        <encoding>UTF-8</encoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${apache.logging}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>iseekframework-utils</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- about Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>${javadoc.opts}</additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- about source -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- about GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <!-- about project message -->
+    <name>iseekframework-utils</name>
+    <description>This is iseekframework-utils</description>
+    <url>https://github.com/gaby77/iseekframework-utils</url>
+
+    <!-- 上传到快照仓库还是发布仓库，由profile决定 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Internal Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <!-- 配置发布版本 -->
+            <id>release</id>
+            <properties>
+                <project.release.version>0.0.2</project.release.version>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 配置快照版本 -->
+            <id>﻿snapshot</id>
+            <properties>
+                <project.release.version>0.1-SNAPSHOT</project.release.version>
+            </properties>
+            <activation>
+                <!-- 制定默认配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>disable-javadoc-doclint</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- license -->
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- SCM信息 -->
+    <scm>
+        <url>https://github.com/gaby77/iseekframework-utils</url>
+        <connection>https://github.com/gaby77/iseekframework-utils.git</connection>
+        <developerConnection>https://github.com/gaby77/iseekframework-utils</developerConnection>
+    </scm>
+
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <name>gaby</name>
+            <email>352962709@qq.com</email>
+            <url>https://github.com/gaby77/iseekframework-utils</url>
+        </developer>
+    </developers>
+</project>
